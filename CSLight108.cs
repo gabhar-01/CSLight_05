@@ -34,15 +34,12 @@ namespace CSLight108
 
             string userInput;
             userInput = Console.ReadLine();
+            string value;
 
-            foreach (var thisOne in glossary)
+            if (glossary.TryGetValue(userInput, out value))
             {
-                if (thisOne.Key == userInput)
-                {
-                    Console.WriteLine(thisOne.Key + " — " + thisOne.Value);
-                    isFound = true;
-                    break;
-                }
+                Console.WriteLine(userInput + " — " + value);
+                isFound = true;
             }
 
             CheckFor(isFound);
