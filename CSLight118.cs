@@ -19,21 +19,33 @@ namespace CSLight118
                 "\n 4 - Выход.");
                 Console.SetCursorPosition(0, 0);
 
-                switch (Convert.ToInt32(Console.ReadLine()))
+                string userInput = Console.ReadLine();
+                int inputNumber;
+                bool isUserInputCorrect;
+                isUserInputCorrect = int.TryParse(userInput, out inputNumber);
+
+                if (isUserInputCorrect)
                 {
-                    case 1:
-                        AddDossier(dossiers);
-                        break;
-                    case 2:
-                        OutputAllDossiers(dossiers);
-                        break;
-                    case 3:
-                        DeleteDossier(dossiers);
-                        break;
-                    case 4:
-                        Console.WriteLine("ББ :)");
-                        isRunning = false;
-                        break;
+                    switch (inputNumber)
+                    {
+                        case 1:
+                            AddDossier(dossiers);
+                            break;
+                        case 2:
+                            OutputAllDossiers(dossiers);
+                            break;
+                        case 3:
+                            DeleteDossier(dossiers);
+                            break;
+                        case 4:
+                            Console.WriteLine("\nББ :)");
+                            isRunning = false;
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nОшибка ввода. Пожалуйста, введите число.");
                 }
 
                 Console.ReadKey();
@@ -48,8 +60,27 @@ namespace CSLight118
             Console.Write("Введите должность: ");
             string jobPosition = Console.ReadLine();
 
-            dossiers.Add(fullName, jobPosition);
-            Console.WriteLine("\nДосье добавлено.");
+            if (IsKeyFree(dossiers, fullName) == false)
+            {
+                Console.WriteLine("\nТакой сотрудник уже есть в базе.");
+            }
+            else
+            {
+                dossiers.Add(fullName, jobPosition);
+                Console.WriteLine("\nДосье добавлено.");
+            }
+        }
+
+        static bool IsKeyFree (Dictionary<string, string> dossiers, string fullName)
+        {
+            if (dossiers.ContainsKey(fullName) == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         static void OutputAllDossiers(Dictionary<string, string> dossiers)
@@ -60,11 +91,12 @@ namespace CSLight118
             }
             else
             {
-                int i = 1;
+                int dossiersPositionX = 70;
+                int dossiersPositionY = 1;
 
                 foreach (var thisOne in dossiers)
                 {
-                    Console.SetCursorPosition(70, i++);
+                    Console.SetCursorPosition(dossiersPositionX, dossiersPositionY++);
                     Console.WriteLine(thisOne.Key + " - " + thisOne.Value);
                 }
             }
@@ -81,9 +113,6 @@ namespace CSLight118
                 Console.WriteLine("Удалить досье по фамилии.");
 
                 DeleteByFullName(dossiers);
-
-                Console.WriteLine("\nДосье удалено.");
-
             }
         }
 
@@ -95,6 +124,8 @@ namespace CSLight118
             if (dossiers.ContainsKey(userInput))
             {
                 dossiers.Remove(userInput);
+
+                Console.WriteLine("\nДосье удалено.");
             }
             else
             {
