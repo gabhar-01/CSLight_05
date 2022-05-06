@@ -18,10 +18,13 @@ namespace CSLight116
         static void Fill (Queue<int> purchaseAmount)
         {
             Random random = new Random();
+            int maxAmountOfCustomers = 20;
+            int minPurchaseAmount = 100;
+            int maxPurchaseAmount = 10000;
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < maxAmountOfCustomers; i++)
             {
-                purchaseAmount.Enqueue(random.Next(100, 10000));
+                purchaseAmount.Enqueue(random.Next(minPurchaseAmount, maxPurchaseAmount));
             }
         }
 
