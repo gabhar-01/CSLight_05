@@ -30,24 +30,33 @@ namespace CSLight117
 
                 if (userInput == sumCommand)
                 {
-                    int sum = 0;
-
-                    foreach (int number in dynamicArray)
-                    {
-                        sum += number;
-                    }
-
-                    Console.WriteLine(sum);
+                    WriteSum(dynamicArray);
                 }
                 else if (userInput == exitCommand)
                 {
                     isRunning = false;
+                }
+                else if (int.TryParse(userInput, out int result) == false)
+                {
+                    Console.WriteLine("Некорректный тип данных.");
                 }
                 else
                 {
                     dynamicArray.Add(Convert.ToInt32(userInput));
                 }
             }
+        }
+
+        static void WriteSum (List<int> dynamicArray)
+        {
+            int sum = 0;
+
+            foreach (int number in dynamicArray)
+            {
+                sum += number;
+            }
+
+            Console.WriteLine(sum);
         }
     }
 }
